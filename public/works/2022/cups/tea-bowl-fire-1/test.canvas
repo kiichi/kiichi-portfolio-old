@@ -1,0 +1,11 @@
+{
+	"nodes":[
+		{"id":"0ded50c386894bc5","x":-546,"y":-689,"width":400,"height":400,"type":"file","file":"works/2022/cups/tea-bowl-fire-1/tea-bowl-fire-1.md"},
+		{"id":"b58d201fb5ccf332","x":-213,"y":-15,"width":250,"height":60,"type":"text","text":"card"},
+		{"id":"1f2ed10ae0adc8dd","x":-12,"y":-548,"width":400,"height":400,"type":"file","file":"works/2022/cups/tea-bowl-fire-1/1.jpg"}
+	],
+	"edges":[
+		{"id":"529eb01e431cfb90","fromNode":"b58d201fb5ccf332","fromSide":"top","toNode":"1f2ed10ae0adc8dd","toSide":"bottom"},
+		{"id":"fbe8a343ac295ca1","fromNode":"b58d201fb5ccf332","fromSide":"top","toNode":"0ded50c386894bc5","toSide":"bottom"}
+	]
+}

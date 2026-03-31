@@ -1,0 +1,196 @@
+<html>
+
+<head>
+    <script src="./plotly-2.18.0.min.js"></script>
+</head>
+
+<body>
+    <div id="myDiv"></div>
+    <script>
+        d3.csv('./data-normalized.csv', function (err, rows) {
+            var p1tmp = [];
+            var p2tmp = [];
+            for (i = 1; i < rows.length; i++) {
+                var p1 = parseInt(rows[i]['p1']);
+                if (p1>3000 || p1<=0){
+                    rows[i]['p1'] = p1tmp[p1tmp.length-1];
+                }
+                else{
+                    p1tmp.push(p1);
+                }
+
+                var p2 = parseInt(rows[i]['p2']);
+                if (p2>3000 || p2<=0){
+                    rows[i]['p2'] = p2tmp[p2tmp.length-1];
+                }
+                else {
+                    p2tmp.push(p2);
+                }
+            }
+            var p1data = {z:[],x:[],y:[]};
+            var p2data = {z:[],x:[],y:[]};
+            
+            for (i = 1; i < rows.length; i++) {
+                var p1p=parseInt(rows[i-1]['p1']);
+                var p2p=parseInt(rows[i-1]['p2']);
+                var tp=rows[i-1]['date'] + ' ' + rows[i-1]['time'];
+
+                var p1=parseInt(rows[i]['p1']);
+                var p2=parseInt(rows[i]['p2']);
+                var t=rows[i]['date'] + ' ' + rows[i]['time'];
+
+
+
+                p1data.x.push([1,1.3]);
+                p1data.y.push([tp,t]);
+                p1data.z.push([p1p,p1]);
+
+                p2data.x.push([2,2.3]);
+                p2data.y.push([tp,t]);
+                p2data.z.push([p2p,p2]);
+            }            
+
+            var data = [{
+                x: p1data.x,
+                y: p1data.y,
+                z: p1data.z,
+                cmin: 0,
+                cmax: 2732,
+                // colorscale: 'Hot',
+                // Reference: https://www.cityfire.co.uk/news/the-temperature-of-fire/
+                colorscale:  [
+                [
+                    "0", 
+                    "rgb(0,0,0)"
+                ], 
+                [
+                    "0.1", 
+                    "rgb(30,0,0)"
+                ], 
+                [
+                    "0.2", 
+                    "rgb(60,0,0)"
+                ], 
+                [
+                    "0.35", 
+                    "rgb(100,0,0)"
+                ], 
+                [
+                    "0.466", 
+                    "rgb(150,2,2)"
+                ], 
+                [
+                    "0.533", 
+                    "rgb(205,0,0)"
+                ], 
+                [
+                    "0.6", 
+                    "rgb(220,0,0)"
+                ], 
+                [
+                    "0.66", 
+                    "rgb(255,1,1)"
+                ], 
+                [
+                    "0.72", 
+                    "rgb(255,112,0)"
+                ], 
+                [
+                    "0.86", 
+                    "rgb(254,230,158)"
+                ],
+                [
+                    "0.93", 
+                    "rgb(254,237,205)"
+                ], 
+                [
+                    "1", 
+                    "rgb(255,247,234)"
+                ]
+                ],
+                type: 'surface'
+            },
+            {
+                x: p2data.x,
+                y: p2data.y,
+                z: p2data.z,
+                type: 'surface',
+                cmin: 0,
+                cmax: 2732,
+                // colorscale: 'Hot',
+                // Reference: https://www.cityfire.co.uk/news/the-temperature-of-fire/
+                colorscale:  [
+                [
+                    "0", 
+                    "rgb(0,0,0)"
+                ], 
+                [
+                    "0.1", 
+                    "rgb(30,0,0)"
+                ], 
+                [
+                    "0.2", 
+                    "rgb(80,0,0)"
+                ], 
+                [
+                    "0.35", 
+                    "rgb(100,0,0)"
+                ], 
+                [
+                    "0.466", 
+                    "rgb(150,2,2)"
+                ], 
+                [
+                    "0.533", 
+                    "rgb(205,0,0)"
+                ], 
+                [
+                    "0.6", 
+                    "rgb(220,0,0)"
+                ], 
+                [
+                    "0.66", 
+                    "rgb(255,1,1)"
+                ], 
+                [
+                    "0.72", 
+                    "rgb(255,112,0)"
+                ], 
+                [
+                    "0.86", 
+                    "rgb(254,230,158)"
+                ],
+                [
+                    "0.93", 
+                    "rgb(254,237,205)"
+                ], 
+                [
+                    "1", 
+                    "rgb(255,247,234)"
+                ]
+                ],
+                showscale: false
+                
+            }];
+
+
+            var layout = {
+                title: 'Guppie Gama Feb 2023',
+                autosize: false,
+                scene: {xaxis:{range:[0,3]},zaxis:{range:[0,2732]},camera:{eye:{x:1.8,y:-1}}},
+                width: 1000,
+                height: 800,
+                margin: {
+                    l: 65,
+                    r: 50,
+                    b: 65,
+                    t: 90,
+                }
+            };
+            Plotly.newPlot('myDiv', data, layout);
+        });
+
+    </script>
+</body>
+
+</html>
